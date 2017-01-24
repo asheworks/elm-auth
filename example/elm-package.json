@@ -1,0 +1,32 @@
+{
+    "version": "1.0.0",
+    "summary": "Example elm project providing integration with AWS Cognito",
+    "repository": "https://github.com/ashaworks/elm-auth-example.git",
+    "license": "BSD3",
+    "source-directories": [
+        "test",
+        "src",
+        "./node_modules/elm-cognito",
+        "../../elm-auth/src",
+        "../../elm-cognito/src",
+        "../../elm-cqrs/src",
+        "../../elm-forms/src"
+    ],
+    "exposed-modules": [
+    ],
+    "dependencies": {
+        "Bogdanp/elm-route": "4.0.0 <= v < 5.0.0",
+        "elm-community/elm-test": "3.0.0 <= v < 4.0.0",
+        "elm-lang/core": "5.0.0 <= v < 6.0.0",
+        "elm-lang/html": "2.0.0 <= v < 3.0.0",
+        "elm-lang/http": "1.0.0 <= v < 2.0.0",
+        "elm-lang/navigation": "2.0.0 <= v < 3.0.0",
+        "elm-lang/svg": "2.0.0 <= v < 3.0.0",
+        "elm-lang/virtual-dom": "2.0.0 <= v < 3.0.0",
+        "NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0",
+        "rtfeldman/elm-css": "7.0.0 <= v < 8.0.0",
+        "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0",
+        "rtfeldman/elm-css-helpers": "2.0.1 <= v < 3.0.0"
+    },
+    "elm-version": "0.18.0 <= v < 0.19.0"
+}

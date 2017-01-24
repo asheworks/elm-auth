@@ -1,0 +1,7 @@
+
+dist/
+elm-stuff/
+node_modules/
+tests/elm-stuff/
+
+credentials.js

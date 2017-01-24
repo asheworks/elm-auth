@@ -1,0 +1,24 @@
+{
+  "name": "elm-auth",
+  "version": "1.0.0",
+  "description": "Elm State Management for Auth",
+  "author": "Perry Birch <perrybirch@asheworks.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asheworks/elm-auth"
+  },
+  "main": "auth.js",
+  "scripts": {
+    "docs": "elm-make --docs=docs.json",
+    "build": "webpack",
+    "test": "jest --watch"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jest-cli": "18.1.0",
+    "json-loader": "^0.5.4",
+    "webpack": "^1.14.0"
+  }
+}
