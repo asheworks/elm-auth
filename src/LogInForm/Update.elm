@@ -1,9 +1,6 @@
 module LogInForm.Update exposing (..)
 
 import String exposing (trim)
-
---
-
 import LogInForm.Model exposing (..)
 
 
@@ -55,35 +52,22 @@ init model =
 
 commandMap : Model -> Command -> Event
 commandMap model command =
-    let
-        t1 =
-            Debug.log "LogInFormCommandMap Command" command
-    in
-        case command of
-            LogIn ->
-                LogInRequested model.username model.password
+    -- let
+    --     t1 =
+    --         Debug.log "LogInFormCommandMap Command" command
+    -- in
+    case command of
+        UpdateUsername value ->
+            UsernameUpdated value
 
-            UpdateUsername value ->
-                UsernameUpdated value
+        UpdatePassword value ->
+            PasswordUpdated value
 
-            UpdatePassword value ->
-                PasswordUpdated value
+        UpdateNewPassword value ->
+            NewPasswordUpdated value
 
-            SignUp ->
-                SignUpRequested
-
-            ForgotPassword ->
-                ForgotPasswordRequested
-
-            -- LogInSuccess payload ->
-            --     LogInSuccessReceived payload
-
-            -- LogInError payload ->
-            --     LogInErrorReceived payload
-
-            
-
-            
+        LogIn ->
+            LogInClicked
 
 
 defaultError : String
@@ -112,60 +96,42 @@ logInErrorMap message =
             else
                 defaultError
 
+
+usernameFilter : String -> String
 usernameFilter value =
     String.filter validUsername <| String.trim value
 
+
 eventMap : Model -> Event -> ( Model, Maybe Effect )
 eventMap model event =
-    let
-        t1 =
-            Debug.log "LogInForm EventMap Event" event
-    in
-        case event of
-            
-            UsernameUpdated value ->
-                ( { model | username = usernameFilter value
-                          , usernameError = validateUsername value
-                          }
-                , Nothing
-                )
+    -- let
+    --     t1 =
+    --         Debug.log "LogInForm EventMap Event" event
+    -- in
+    case event of
+        UsernameUpdated value ->
+            ( { model
+                | username = usernameFilter value
+                , usernameError = validateUsername value
+              }
+            , Nothing
+            )
 
-            PasswordUpdated value ->
-                ( { model | password = value
-                          , passwordError = validatePassword value }
-                , Nothing
-                )
+        PasswordUpdated value ->
+            ( { model
+                | password = value
+                , passwordError = validatePassword value
+              }
+            , Nothing
+            )
 
-            LogInRequested username password ->
-                ( model, Just <| DoLogIn username password )
-            
-            SignUpRequested ->
-                ( model, Nothing )
+        NewPasswordUpdated value ->
+            ( { model
+                | newPassword = value
+                , newPasswordError = validatePassword value
+              }
+            , Nothing
+            )
 
-            ForgotPasswordRequested ->
-                ( model, Nothing )
-
-            -- SignUpRequested ->
-            --     ( model, ShowSignUp )
-
-            -- ForgotPasswordRequested ->
-            --     ( model, ShowForgotPassword )
-
-            -- LogInSuccessReceived result ->
-            --     let
-            --         t =
-            --             Debug.log "LogInForm - LogInSuccessReceived" result
-            --     in
-            --         ( model, None )
-
-            -- LogInErrorReceived message ->
-            --     let
-            --         t =
-            --             Debug.log "LogInForm - LogInErrorReceived" <| logInErrorMap message
-            --     in
-            --         ( { model | logInError = Just <| logInErrorMap message }, None )
-
-           
-
-            
-                
+        LogInClicked ->
+            ( model, Just <| DoLogIn model.username model.password )

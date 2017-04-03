@@ -1,4 +1,4 @@
-module LogInForm.Model
+module PasswordChallengeForm.Model
     exposing
         ( Command(..)
         , Event(..)
@@ -13,7 +13,7 @@ module LogInForm.Model
 
 
 type alias ContextValues =
-    { username : Maybe String
+    {
     }
 
 
@@ -23,74 +23,47 @@ type alias Context =
 
 type alias Model =
     { username : String
-    , usernameError : Maybe String
     , password : String
     , passwordError : Maybe String
-    , showNewPassword : Bool
     , newPassword : String
     , newPasswordError : Maybe String
-    , logInError : Maybe String
+    , error : Maybe String
     }
 
 
 type Command
-    = UpdateUsername String
-    | UpdatePassword String
+    = UpdatePassword String
     | UpdateNewPassword String
-    | LogIn
-
+    | Submit
 
 type Event
-    = UsernameUpdated String
-    | PasswordUpdated String
+    = PasswordUpdated String
     | NewPasswordUpdated String
-    | LogInClicked
-
+    | SubmitClicked
 
 type Effect
-    = DoLogIn String String
-
-
-
--- type Command
---     = UpdateUsername String String
---     | UpdatePassword String String
---     | LogIn String
--- type Event
---     = UsernameUpdated String String
---     | PasswordUpdated String String
---     | LogInClicked String
--- type Effect
---     = DoLogIn String String
+    = DoConfirmPassword String
 
 
 mapContext : Context -> Model
 mapContext context =
     Maybe.withDefault
-        { username = Nothing
+        {
         }
         context
         |> mapValues
 
-
 mapValues : ContextValues -> Model
 mapValues values =
-    case values.username of
-        Nothing ->
-            defaultModel
-
-        Just username ->
-            { defaultModel | username = username }
+    defaultModel
 
 
 defaultModel : Model
 defaultModel =
     { username = ""
-    , usernameError = Nothing
     , password = ""
     , passwordError = Nothing
-    , showNewPassword = False
     , newPassword = ""
     , newPasswordError = Nothing
-    , logInError = Nothing
+    , error = Nothing
     }

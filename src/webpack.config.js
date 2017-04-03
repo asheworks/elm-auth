@@ -82,7 +82,7 @@ if (environment === 'development') {
         module: {
             loaders: [
                 {
-                    test: /src\/Stylesheets.elm$/,
+                    test: /Stylesheets.elm$/,
                     loaders: [
                         'style-loader',
                         'css-loader',
@@ -96,7 +96,7 @@ if (environment === 'development') {
                     exclude: [
                         /elm-stuff/,
                         /node_modules/,
-                        /src\/Stylesheets.elm$/
+                        /Stylesheets.elm$/
                     ],
                     loaders: [
                         'elm-hot-loader',
@@ -149,7 +149,7 @@ if (environment === 'development') {
         module: {
             loaders: [
                 {
-                    test: /src\/Stylesheets.elm/,
+                    test: /Stylesheets.elm/,
                     loader: extractCssApp.extract(
                         'style-loader', [
                             'css-loader',
@@ -163,7 +163,7 @@ if (environment === 'development') {
                     exclude: [
                         /elm-stuff/,
                         /node_modules/,
-                        /src\/Stylesheets.elm$/
+                        /Stylesheets.elm$/
                     ],
                     loader: 'elm-webpack-loader'
                 },
@@ -177,9 +177,9 @@ if (environment === 'development') {
 
         plugins: [
             new CopyWebpackPlugin([{
-                from: 'src/index.html'
+                from: 'index.html'
             }, {
-                from: 'src/assets',
+                from: 'assets',
                 to: 'assets'
             }]),
             extractCssApp,

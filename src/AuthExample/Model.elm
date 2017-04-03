@@ -1,4 +1,4 @@
-module Example.Model
+module AuthExample.Model
     exposing
         ( Command(..)
         , Event(..)
@@ -15,8 +15,7 @@ import CQRS exposing (State)
 
 --
 
-import LogInForm.Model as LogInForm
-import SignUpForm.Model as SignUpForm
+import Auth as Auth
 
 type alias ContextValues =
     {}
@@ -27,23 +26,22 @@ type alias Context =
 
 
 type alias Model =
-    { logInForm : State LogInForm.Model
-    , signUpForm : State SignUpForm.Model
+    { auth : State Auth.Model
     }
 
 
 type Command
-    = LogInForm_Command LogInForm.Command
-    | SignUpForm_Command SignUpForm.Command
+    = Auth_Command Auth.Command
+
 
 
 type Event
-    = LogInForm_Event LogInForm.Event
-    | SignUpForm_Event SignUpForm.Event
+    = Auth_Event Auth.Event
+
 
 type Effect
-    = LogInForm_Effect LogInForm.Effect
-    | SignUpForm_Effect SignUpForm.Effect
+    = Auth_Effect Auth.Effect
+    
 
 mapContext : Context -> Model
 mapContext context =
@@ -60,6 +58,5 @@ mapValues values =
 
 defaultModel : Model
 defaultModel =
-    { logInForm = State <| LogInForm.defaultModel
-    , signUpForm = State <| SignUpForm.defaultModel
+    { auth = State <| Auth.defaultModel
     }

@@ -4,13 +4,11 @@
     "repository": "https://github.com/ashaworks/elm-auth-example.git",
     "license": "BSD3",
     "source-directories": [
-        "test",
-        "src",
-        "./node_modules/elm-cognito",
-        "../../elm-auth/src",
+        "./",
+        "./node_modules/elm-cognito",        
         "../../elm-cognito/src",
         "../../elm-cqrs/src",
-        "../../elm-forms/src"
+        "../../elm-ui/src"
     ],
     "exposed-modules": [
     ],

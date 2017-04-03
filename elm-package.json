@@ -6,11 +6,10 @@
     "source-directories": [
         "src",
         "../elm-cognito",
-        "../elm-forms"
+        "../elm-ui"
     ],
     "exposed-modules": [
-        "Auth",
-        "Example"
+        "Auth"
     ],
     "dependencies": {
         "elm-lang/core": "5.0.0 <= v < 6.0.0",

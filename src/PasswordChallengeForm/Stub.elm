@@ -1,16 +1,15 @@
-module SignUpForm.Stub exposing (..)
+module PasswordChallengeForm.Stub exposing (..)
 
 import CQRS exposing (..)
-import Navigation as Navigation
 import Html exposing (..)
 import UI as UI
 
 
 --
 
-import SignUpForm.Model exposing (..)
-import SignUpForm.Update as SignUpForm
-import SignUpForm.View as SignUpForm
+import PasswordChallengeForm.Model exposing (..)
+import PasswordChallengeForm.Update as PasswordChallengeForm
+import PasswordChallengeForm.View as PasswordChallengeForm
 
 
 --
@@ -19,12 +18,12 @@ import SignUpForm.View as SignUpForm
 main : Program Context Model Command
 main =
     CQRS.program
-        { decode = SignUpForm.decode
-        , encode = SignUpForm.encode
+        { decode = PasswordChallengeForm.decode
+        , encode = PasswordChallengeForm.encode
         , init = init
         , view = view
-        , commandMap = SignUpForm.commandMap
-        , eventMap = SignUpForm.eventMap
+        , commandMap = PasswordChallengeForm.commandMap
+        , eventMap = PasswordChallengeForm.eventMap
         , eventHandler = eventHandler
         , subscriptions = subscriptions
         }
@@ -32,8 +31,8 @@ main =
 
 eventHandler : ( Model, Effect ) -> Cmd Command
 eventHandler ( model, effect ) =
-    case Debug.log "SignUpForm Stub - EventHandler" effect of
-        DoSignUp username password ->
+    case Debug.log "PasswordChallengeForm Stub - EventHandler" effect of
+        DoConfirmPassword password ->
             Cmd.none
 
 
@@ -44,7 +43,7 @@ subscriptions model =
 
 init : Model -> ( Model, Maybe Effect )
 init model =
-    SignUpForm.init <| validationErrors model
+    PasswordChallengeForm.init <| validationErrors model
 
 
 view : Model -> Html Command
@@ -53,29 +52,28 @@ view model =
         { id = "auth-form"
         , header =
             Just
-                [ Html.text "SIGN UP"
+                [ Html.text "RESET PASSWORD"
                 ]
-        , section = Just <| SignUpForm.view model
+        , section = Just <| PasswordChallengeForm.view model
         , aside = Nothing
         , footer = Nothing
         }
 
 
-populatedUsernameAndPassword : Model -> Model
-populatedUsernameAndPassword model =
+populatedPassword : Model -> Model
+populatedPassword model =
     { model
-        | username = "test0001"
+        | username = "Joe@gmail.com"
         , password = "P@ssw0rd"
+        , newPassword = "P@ssw0rd"
     }
 
 
 validationErrors : Model -> Model
 validationErrors model =
     { model
-        | username = ""
-        , usernameError = Just "User name is required"
-        , password = ""
-        , passwordError = Just "Password is required"
+        | newPassword = ""
+        , newPasswordError = Just "Password is required"
         , error = Nothing
     }
 

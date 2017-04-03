@@ -1,14 +1,21 @@
 module LogInForm.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (defaultValue, for, id, placeholder, type_, value)
-import Html.Events exposing (onInput, onClick)
+
 
 --
 
 import LogInForm.Model exposing (Command(..), Model)
 import LogInForm.Style exposing (..)
-import Forms as Forms
+
+
+--
+-- import UI as UI
+
+import UI.Button
+import UI.FieldLabel
+import UI.Input
+
 
 { id, class, classList } =
     cssNamespace
@@ -17,76 +24,102 @@ import Forms as Forms
 
 --
 
-view : Model -> Html Command
+
+view : Model -> List (Html Command)
 view model =
-    div
-        [ class [ Component ]
-        ]
-        [ form
-            [ id "auth-form" ]
-            [ usernameInput model
-            , passwordInput model
-            , logInButton model
-            , Forms.errorLabel model.logInError
-            , forgotPasswordButton model
-            , signUpButton model
-            ]
-        ]
+    [ usernameInput model
+    ]
+        ++ (if model.showNewPassword then
+                [ newPasswordInput model
+                ]
+            else
+                [ passwordInput model
+                ]
+           )
+        ++ [ submit
+           ]
+
+
+
+-- view : Model -> List ( Html Command )
+-- view model =
+--   UI.formControl
+--     { id = "auth-form"
+--     , header = Just
+--       [ Html.text "LOG IN"
+--       ]
+--     , section = Just
+--       [ usernameInput model
+--       , passwordInput model
+--       , submit
+--       ]
+--     , aside = Nothing
+--     , footer = Nothing
+--     }
+
 
 usernameInput : Model -> Html Command
 usernameInput model =
-    div
-        []
-        [ Forms.inputField
-            { key = "username"
-            , label = "User Name: "
+    UI.FieldLabel.view
+        { id = "username-label"
+        , label = "User Name: "
+        , error = False
+        , labelColorHex = Nothing
+        }
+        [ UI.Input.view
+            { id = "username"
             , placeholder = "e.g. user@gmail.com"
+            , inputType = UI.Input.TextField
             , value = model.username
-            , error = model.usernameError
+            , error = False
             , onInput = UpdateUsername
             }
         ]
 
+
 passwordInput : Model -> Html Command
 passwordInput model =
-    div
-        []
-        [ Forms.inputField
-            { key = "password"
-            , label = "Password: "
+    UI.FieldLabel.view
+        { id = "password-label"
+        , label = "Password: "
+        , error = False
+        , labelColorHex = Nothing
+        }
+        [ UI.Input.view
+            { id = "password"
             , placeholder = ""
+            , inputType = UI.Input.PasswordField
             , value = model.password
-            , error = model.passwordError
+            , error = False
             , onInput = UpdatePassword
             }
         ]
 
 
-logInButton : Model -> Html Command
-logInButton model =
-    div
-        [ class [ LogInButton ]
-        , onClick LogIn
-        ]
-        [ text "LOGIN"
+newPasswordInput : Model -> Html Command
+newPasswordInput model =
+    UI.FieldLabel.view
+        { id = "new-password-label"
+        , label = "New Password: "
+        , error = False
+        , labelColorHex = Nothing
+        }
+        [ UI.Input.view
+            { id = "new-password"
+            , placeholder = ""
+            , inputType = UI.Input.PasswordField
+            , value = model.newPassword
+            , error = False
+            , onInput = UpdateNewPassword
+            }
         ]
 
 
-signUpButton : Model -> Html Command
-signUpButton model =
-    div
-        [ class [ SignUpButton ]
-        , onClick SignUp
-        ]
-        [ text "Sign up now"
-        ]
-
-
-forgotPasswordButton : Model -> Html Command
-forgotPasswordButton model =
-    div
-        [ class [ ForgotPasswordButton ]
-        , onClick ForgotPassword
-        ]
-        [ text "Oops, forgot password?"
-        ]
+submit : Html Command
+submit =
+    UI.Button.view
+        { id = "submit"
+        , label = "LOG IN"
+        , error = False
+        , onClick = LogIn
+        }

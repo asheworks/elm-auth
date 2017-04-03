@@ -1,14 +1,16 @@
 module SignUpForm.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (defaultValue, for, id, placeholder, type_, value)
-import Html.Events exposing (onInput, onClick)
+
 
 --
 
 import SignUpForm.Model exposing (Command(..), Model)
 import SignUpForm.Style exposing (..)
-import Forms as Forms
+import UI as UI
+import UI.Button
+import UI.FieldLabel
+import UI.Input
 
 
 { id, class, classList } =
@@ -18,65 +20,78 @@ import Forms as Forms
 
 --
 
-view : Model -> Html Command
+
+view : Model -> List (Html Command)
 view model =
-    div
-        [ class [ Component ]
-        ]
-        [ form
-            [ id "auth-form" ]
-            [ usernameInput model
-            , passwordInput model
-            , signUpButton model
-            , Forms.errorLabel model.signUpError
-            , logInButton model
-            ]
-        ]
+    [ usernameInput model
+    , passwordInput model
+    , submit
+    ]
+
+
+
+-- view : Model -> Html Command
+-- view model =
+--     UI.formControl
+--         { id = "auth-form"
+--         , header =
+--             Just
+--                 [ Html.text "SIGN UP"
+--                 ]
+--         , section =
+--             Just
+--                 [ usernameInput model
+--                 , passwordInput model
+--                 , submit
+--                 ]
+--         , aside = Nothing
+--         , footer = Nothing
+--         }
+
 
 usernameInput : Model -> Html Command
 usernameInput model =
-    div
-        []
-        [ Forms.inputField
-            { key = "username"
-            , label = "User Name: "
+    UI.FieldLabel.view
+        { id = "username-label"
+        , label = "User Name: "
+        , error = False
+        , labelColorHex = Nothing
+        }
+        [ UI.Input.view
+            { id = "username"
             , placeholder = "e.g. user@gmail.com"
+            , inputType = UI.Input.TextField
             , value = model.username
-            , error = model.usernameError
+            , error = False
             , onInput = UpdateUsername
             }
         ]
 
+
 passwordInput : Model -> Html Command
 passwordInput model =
-    div
-        []
-        [ Forms.inputField
-            { key = "password"
-            , label = "Password: "
+    UI.FieldLabel.view
+        { id = "password-label"
+        , label = "Password: "
+        , error = False
+        , labelColorHex = Nothing
+        }
+        [ UI.Input.view
+            { id = "password"
             , placeholder = ""
+            , inputType = UI.Input.PasswordField
             , value = model.password
-            , error = model.passwordError
+            , error = False
             , onInput = UpdatePassword
             }
         ]
 
 
-signUpButton : Model -> Html Command
-signUpButton model =
-    div
-        [ class [ SignUpButton ]
-        , onClick SignUp
-        ]
-        [ text "SIGN UP"
-        ]
-
-
-logInButton : Model -> Html Command
-logInButton model =
-    div
-        [ class [ LogInButton ]
-        , onClick LogIn
-        ]
-        [ text "Log In To Existing Account"
-        ]
+submit : Html Command
+submit =
+    UI.Button.view
+        { id = "submit"
+        , label = "SIGN UP"
+        , error = False
+        , onClick = SignUp
+        }

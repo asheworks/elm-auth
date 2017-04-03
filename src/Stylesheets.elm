@@ -7,8 +7,14 @@ import Css.File exposing (CssFileStructure, CssCompilerProgram, compile, toFileS
 
 -- import Reset as Reset
 
--- import Example.Style as Example
+import UI as UI
+import UI.Theme as UI
+import Themes.Default as Theme
+import AuthExample.Style as AuthExample
+
+
 -- import LogIn.Style as LogIn
+
 
 port files : CssFileStructure -> Cmd msg
 
@@ -19,24 +25,26 @@ cssFiles =
         [ ( "global.css"
           , Css.File.compile
                 [ css
+                , Theme.css UI.theme
                 ]
           )
         , ( "styles.css"
           , Css.File.compile
-                [ --Example.css
+                [ AuthExample.css
                 ]
           )
         , ( "components.css"
           , Css.File.compile
-            [ --LogIn.css
-            ]
-        )
+                [--LogIn.css
+                ]
+          )
         ]
 
 
 main : CssCompilerProgram
 main =
     Css.File.compiler files cssFiles
+
 
 {-| A [Stylesheet](https://github.com/rtfeldman/elm-css/blob/master/Tutorial.md) to rest values to make them more consistent across most browsers. You can
 include this stylesheet in your elm-css compilation file.

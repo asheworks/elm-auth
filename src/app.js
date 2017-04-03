@@ -2,29 +2,18 @@
 
 'use strict';
 
-// console.log('pull in cognito: ')
-// var provider = require('elm-cognito')
-// console.log('pulled in cognito')
-
 require( './Stylesheets' );
 
-// var creds = require('./credentials')
-
-var page = [ 'Example' ];
+var page = [ 'AuthExample' ];
 
 var settings =
   { env: 'dev'
   // { env: 'prod'
-  // , cognito:
-  //   { creds: creds
-  //   }
   };
 
-// console.log('example app settings: ', settings)
-
 var path = page.join('/');
-var bootstrap = require( './src/' + path + '/_Bootstrap');
-var ctrl = require('./src/' + path + '/Stub');
+var bootstrap = require( './' + path + '/_Bootstrap');
+var ctrl = require('./' + path + '/Stub');
 var i = 0;
 var l = page.length;
 while(i < l) {
@@ -46,6 +35,3 @@ if (typeof ctx.ports !== 'undefined' || ctx.init === null) {
 }
 
 })();
-
-// ,
-//     "aws-sdk": "2.7.27"
