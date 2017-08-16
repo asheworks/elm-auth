@@ -64,6 +64,7 @@ usernameInput model =
             , value = model.username
             , error = False
             , onInput = UpdateUsername
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -83,6 +84,7 @@ passwordInput model =
             , value = model.password
             , error = False
             , onInput = UpdatePassword
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -94,4 +96,5 @@ submit =
         , label = "SIGN UP"
         , error = False
         , onClick = SignUp
+        , onKeyDown = KeyDown
         }

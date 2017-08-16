@@ -168,52 +168,52 @@ type Effect
 
 commandMap : Model -> Command -> Event
 commandMap model command =
-    let
-        t1 =
-            Debug.log "Auth Command" command
-    in
-        case command of
-            LogInForm_Command command_ ->
-                LogInForm_Event <| LogInForm.commandMap model.logInForm.state command_
+    -- let
+    --     t1 =
+    --         Debug.log "Auth Command" command
+    -- in
+    case command of
+        LogInForm_Command command_ ->
+            LogInForm_Event <| LogInForm.commandMap model.logInForm.state command_
 
-            LogInError message ->
-                LogInErrorReceived message
+        LogInError message ->
+            LogInErrorReceived message
 
-            LogInFailure message ->
-                LogInFailureReceived message
+        LogInFailure message ->
+            LogInFailureReceived message
 
-            LogInMFARequired message ->
-                LogInMFARequiredReceived message
+        LogInMFARequired message ->
+            LogInMFARequiredReceived message
 
-            LogInNewPasswordRequired message ->
-                LogInNewPasswordRequiredReceived message
+        LogInNewPasswordRequired message ->
+            LogInNewPasswordRequiredReceived message
 
-            LogInSuccess tokens ->
-                LogInSuccessReceived tokens
+        LogInSuccess tokens ->
+            LogInSuccessReceived tokens
 
-            PasswordChallengeForm_Command command_ ->
-                PasswordChallengeForm_Event <| PasswordChallengeForm.commandMap model.passwordChallengeForm.state command_
+        PasswordChallengeForm_Command command_ ->
+            PasswordChallengeForm_Event <| PasswordChallengeForm.commandMap model.passwordChallengeForm.state command_
 
-            PasswordChallengeError message ->
-                PasswordChallengeErrorReceived message
+        PasswordChallengeError message ->
+            PasswordChallengeErrorReceived message
 
-            PasswordChallengeFailure message ->
-                PasswordChallengeFailureReceived message
+        PasswordChallengeFailure message ->
+            PasswordChallengeFailureReceived message
 
-            PasswordChallengeSuccess tokens ->
-                PasswordChallengeSuccessReceived tokens
+        PasswordChallengeSuccess tokens ->
+            PasswordChallengeSuccessReceived tokens
 
-            SignUpForm_Command command_ ->
-                SignUpForm_Event <| SignUpForm.commandMap model.signUpForm.state command_
+        SignUpForm_Command command_ ->
+            SignUpForm_Event <| SignUpForm.commandMap model.signUpForm.state command_
 
-            SignUpError message ->
-                SignUpErrorReceived message
+        SignUpError message ->
+            SignUpErrorReceived message
 
-            SignUpFailure message ->
-                SignUpFailureReceived message
+        SignUpFailure message ->
+            SignUpFailureReceived message
 
-            SignUpSuccess message ->
-                SignUpSuccessReceived message
+        SignUpSuccess message ->
+            SignUpSuccessReceived message
 
 
 logInEventMap : Model -> LogInForm.Event -> ( Model, Maybe Effect )
@@ -314,80 +314,80 @@ signUpEventMap model event =
 
 eventMap : Model -> Event -> ( Model, Maybe Effect )
 eventMap model event =
-    let
-        t1 =
-            Debug.log "Auth Event" event
-    in
-        case event of
-            LogInForm_Event event_ ->
-                logInEventMap model event_
+    -- let
+    --     t1 =
+    --         Debug.log "Auth Event" event
+    -- in
+    case event of
+        LogInForm_Event event_ ->
+            logInEventMap model event_
 
-            LogInErrorReceived message ->
+        LogInErrorReceived message ->
+            ( { model
+                | logInError = Just message
+              }
+            , Nothing
+            )
+
+        -- ( model, Nothing )
+        LogInFailureReceived message ->
+            ( { model
+                | logInError = Just message
+              }
+            , Nothing
+            )
+
+        LogInMFARequiredReceived message ->
+            ( model, Nothing )
+
+        LogInNewPasswordRequiredReceived message ->
+            let
+                logInForm =
+                    model.logInForm.state
+            in
                 ( { model
-                    | logInError = Just message
+                    | logInForm = State { logInForm | showNewPassword = True }
                   }
                 , Nothing
                 )
 
-            -- ( model, Nothing )
-            LogInFailureReceived message ->
-                ( { model
-                    | logInError = Just message
-                  }
-                , Nothing
-                )
+        -- ( model, Nothing )
+        LogInSuccessReceived tokens ->
+            ( { model
+                | user = Just <| User model.logInForm.state.username model.logInForm.state.username
+                , tokens = Just tokens
+              }
+            , Nothing
+            )
 
-            LogInMFARequiredReceived message ->
-                ( model, Nothing )
+        PasswordChallengeForm_Event event_ ->
+            passwordChallengeEventMap model event_
 
-            LogInNewPasswordRequiredReceived message ->
-                let
-                    logInForm =
-                        model.logInForm.state
-                in
-                    ( { model
-                        | logInForm = State { logInForm | showNewPassword = True }
-                      }
-                    , Nothing
-                    )
+        PasswordChallengeErrorReceived message ->
+            ( model, Nothing )
 
-            -- ( model, Nothing )
-            LogInSuccessReceived tokens ->
-                ( { model
-                    | user = Just <| User model.logInForm.state.username model.logInForm.state.username
-                    , tokens = Just tokens
-                  }
-                , Nothing
-                )
+        PasswordChallengeFailureReceived message ->
+            ( model, Nothing )
 
-            PasswordChallengeForm_Event event_ ->
-                passwordChallengeEventMap model event_
+        PasswordChallengeSuccessReceived tokens ->
+            ( { model
+                | tokens = Just tokens
+              }
+            , Nothing
+            )
 
-            PasswordChallengeErrorReceived message ->
-                ( model, Nothing )
+        -- ( model, Nothing )
+        SignUpForm_Event event_ ->
+            signUpEventMap model event_
 
-            PasswordChallengeFailureReceived message ->
-                ( model, Nothing )
+        SignUpErrorReceived message ->
+            ( model, Nothing )
 
-            PasswordChallengeSuccessReceived tokens ->
-                ( { model
-                    | tokens = Just tokens
-                  }
-                , Nothing
-                )
+        SignUpFailureReceived message ->
+            ( model, Nothing )
 
-            -- ( model, Nothing )
-            SignUpForm_Event event_ ->
-                signUpEventMap model event_
-
-            SignUpErrorReceived message ->
-                ( model, Nothing )
-
-            SignUpFailureReceived message ->
-                ( model, Nothing )
-
-            SignUpSuccessReceived message ->
-                ( model, Nothing )
+        SignUpSuccessReceived message ->
+            ( model, Nothing )
 
 
 mapContext : Context -> Model

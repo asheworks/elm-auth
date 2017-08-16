@@ -13,8 +13,7 @@ module PasswordChallengeForm.Model
 
 
 type alias ContextValues =
-    {
-    }
+    {}
 
 
 type alias Context =
@@ -35,11 +34,15 @@ type Command
     = UpdatePassword String
     | UpdateNewPassword String
     | Submit
+    | KeyDown Int
+
 
 type Event
     = PasswordUpdated String
     | NewPasswordUpdated String
     | SubmitClicked
+    | KeyPressed Int
+
 
 type Effect
     = DoConfirmPassword String
@@ -48,10 +51,10 @@ type Effect
 mapContext : Context -> Model
 mapContext context =
     Maybe.withDefault
-        {
-        }
+        {}
         context
         |> mapValues
+
 
 mapValues : ContextValues -> Model
 mapValues values =

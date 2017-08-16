@@ -10,7 +10,6 @@ import LogInForm.Style exposing (..)
 
 
 --
--- import UI as UI
 
 import UI.Button
 import UI.FieldLabel
@@ -40,24 +39,6 @@ view model =
            ]
 
 
-
--- view : Model -> List ( Html Command )
--- view model =
---   UI.formControl
---     { id = "auth-form"
---     , header = Just
---       [ Html.text "LOG IN"
---       ]
---     , section = Just
---       [ usernameInput model
---       , passwordInput model
---       , submit
---       ]
---     , aside = Nothing
---     , footer = Nothing
---     }
-
-
 usernameInput : Model -> Html Command
 usernameInput model =
     UI.FieldLabel.view
@@ -73,6 +54,7 @@ usernameInput model =
             , value = model.username
             , error = False
             , onInput = UpdateUsername
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -92,6 +74,7 @@ passwordInput model =
             , value = model.password
             , error = False
             , onInput = UpdatePassword
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -111,6 +94,7 @@ newPasswordInput model =
             , value = model.newPassword
             , error = False
             , onInput = UpdateNewPassword
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -122,4 +106,5 @@ submit =
         , label = "LOG IN"
         , error = False
         , onClick = LogIn
+        , onKeyDown = KeyDown
         }

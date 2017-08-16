@@ -27,6 +27,8 @@ validUsername char =
     else
         True
 
+
+
 --
 
 
@@ -61,6 +63,9 @@ commandMap model command =
             SignUp ->
                 SignUpClicked
 
+            KeyDown keyCode ->
+                KeyPressed keyCode
+
 
 usernameFilter value =
     String.filter validUsername <| String.trim value
@@ -70,17 +75,28 @@ eventMap : Model -> Event -> ( Model, Maybe Effect )
 eventMap model event =
     case event of
         UsernameUpdated value ->
-            ( { model | username = usernameFilter value
-                          , usernameError = validateUsername value
-                          }
-                , Nothing
-                )
+            ( { model
+                | username = usernameFilter value
+                , usernameError = validateUsername value
+              }
+            , Nothing
+            )
 
         PasswordUpdated value ->
-            ( { model | password = value
-                          , passwordError = validatePassword value }
-                , Nothing
-                )
+            ( { model
+                | password = value
+                , passwordError = validatePassword value
+              }
+            , Nothing
+            )
 
         SignUpClicked ->
             ( model, Just <| DoSignUp model.username model.password )
+
+        KeyPressed keyCode ->
+            case keyCode of
+                13 ->
+                    ( model, Just <| DoSignUp model.username model.password )
+
+                _ ->
+                    ( model, Nothing )

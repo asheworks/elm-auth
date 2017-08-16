@@ -1,6 +1,6 @@
 "use strict"
 
-var noop = () => {}
+var noop = function() {}
 
 var cognito = null
 
@@ -13,7 +13,7 @@ exports.context = {
   },
   ports: function(settings, app, state) {
     try {
-      // settings.auth.provider(app.ports)
+      settings.auth.provider(app.ports)
     } catch(ex) {
       console.log('Provider error: ', ex)
     }

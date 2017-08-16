@@ -38,6 +38,7 @@ type Command
     | UpdatePassword String
     | UpdateNewPassword String
     | LogIn
+    | KeyDown Int
 
 
 type Event
@@ -45,6 +46,7 @@ type Event
     | PasswordUpdated String
     | NewPasswordUpdated String
     | LogInClicked
+    | KeyPressed Int
 
 
 type Effect

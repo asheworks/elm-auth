@@ -11,6 +11,7 @@ validatePassword value =
         Nothing
 
 
+
 --
 
 
@@ -45,22 +46,35 @@ commandMap model command =
             Submit ->
                 SubmitClicked
 
+            KeyDown keyCode ->
+                KeyPressed keyCode
+
 
 eventMap : Model -> Event -> ( Model, Maybe Effect )
 eventMap model event =
     case event of
         PasswordUpdated value ->
-            ( { model | password = value
+            ( { model
+                | password = value
               }
             , Nothing
             )
-            
+
         NewPasswordUpdated value ->
-            ( { model | newPassword = value
-                      , newPasswordError = validatePassword value
+            ( { model
+                | newPassword = value
+                , newPasswordError = validatePassword value
               }
             , Nothing
             )
 
         SubmitClicked ->
             ( model, Just <| DoConfirmPassword model.password )
+
+        KeyPressed keyCode ->
+            case keyCode of
+                13 ->
+                    ( model, Just <| DoConfirmPassword model.password )
+
+                _ ->
+                    ( model, Nothing )

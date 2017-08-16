@@ -13,8 +13,7 @@ module SignUpForm.Model
 
 
 type alias ContextValues =
-    {
-    }
+    {}
 
 
 type alias Context =
@@ -34,11 +33,15 @@ type Command
     = UpdateUsername String
     | UpdatePassword String
     | SignUp
+    | KeyDown Int
+
 
 type Event
     = UsernameUpdated String
     | PasswordUpdated String
     | SignUpClicked
+    | KeyPressed Int
+
 
 type Effect
     = DoSignUp String String
@@ -47,10 +50,10 @@ type Effect
 mapContext : Context -> Model
 mapContext context =
     Maybe.withDefault
-        {
-        }
+        {}
         context
         |> mapValues
+
 
 mapValues : ContextValues -> Model
 mapValues values =

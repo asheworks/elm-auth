@@ -52,22 +52,25 @@ init model =
 
 commandMap : Model -> Command -> Event
 commandMap model command =
-    -- let
-    --     t1 =
-    --         Debug.log "LogInFormCommandMap Command" command
-    -- in
-    case command of
-        UpdateUsername value ->
-            UsernameUpdated value
+    let
+        t1 =
+            Debug.log "LogInFormCommandMap Command" command
+    in
+        case command of
+            UpdateUsername value ->
+                UsernameUpdated value
 
-        UpdatePassword value ->
-            PasswordUpdated value
+            UpdatePassword value ->
+                PasswordUpdated value
 
-        UpdateNewPassword value ->
-            NewPasswordUpdated value
+            UpdateNewPassword value ->
+                NewPasswordUpdated value
 
-        LogIn ->
-            LogInClicked
+            LogIn ->
+                LogInClicked
+
+            KeyDown keyCode ->
+                KeyPressed keyCode
 
 
 defaultError : String
@@ -104,34 +107,42 @@ usernameFilter value =
 
 eventMap : Model -> Event -> ( Model, Maybe Effect )
 eventMap model event =
-    -- let
-    --     t1 =
-    --         Debug.log "LogInForm EventMap Event" event
-    -- in
-    case event of
-        UsernameUpdated value ->
-            ( { model
-                | username = usernameFilter value
-                , usernameError = validateUsername value
-              }
-            , Nothing
-            )
+    let
+        t1 =
+            Debug.log "LogInForm EventMap Event" event
+    in
+        case event of
+            UsernameUpdated value ->
+                ( { model
+                    | username = usernameFilter value
+                    , usernameError = validateUsername value
+                  }
+                , Nothing
+                )
 
-        PasswordUpdated value ->
-            ( { model
-                | password = value
-                , passwordError = validatePassword value
-              }
-            , Nothing
-            )
+            PasswordUpdated value ->
+                ( { model
+                    | password = value
+                    , passwordError = validatePassword value
+                  }
+                , Nothing
+                )
 
-        NewPasswordUpdated value ->
-            ( { model
-                | newPassword = value
-                , newPasswordError = validatePassword value
-              }
-            , Nothing
-            )
+            NewPasswordUpdated value ->
+                ( { model
+                    | newPassword = value
+                    , newPasswordError = validatePassword value
+                  }
+                , Nothing
+                )
 
-        LogInClicked ->
-            ( model, Just <| DoLogIn model.username model.password )
+            LogInClicked ->
+                ( model, Just <| DoLogIn model.username model.password )
+
+            KeyPressed keyCode ->
+                case Debug.log "Auth Key Code" keyCode of
+                    13 ->
+                        ( model, Just <| DoLogIn model.username model.password )
+
+                    _ ->
+                        ( model, Nothing )

@@ -72,6 +72,7 @@ passwordInput model =
             , value = model.password
             , error = False
             , onInput = UpdatePassword
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -91,6 +92,7 @@ newPasswordInput model =
             , value = model.password
             , error = False
             , onInput = UpdateNewPassword
+            , onKeyDown = KeyDown
             }
         ]
 
@@ -102,6 +104,7 @@ submit =
         , label = "CONFIRM NEW PASSWORD"
         , error = False
         , onClick = Submit
+        , onKeyDown = KeyDown
         }
 
 
